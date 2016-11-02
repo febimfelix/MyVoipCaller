@@ -24,18 +24,35 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"/>
 
-        <EditText
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:gravity="center_vertical">
+
+            <EditText
                 android:id="@+id/callName"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.75"
                 android:layout_marginTop="8dp"
                 android:textSize="32sp"
                 android:padding="10dp"
                 android:textColor="@color/colorPrimary"
-                android:inputType="phone">
+                android:inputType="number">
 
-            <requestFocus/>
-        </EditText>
+                <requestFocus/>
+            </EditText>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:text="Show"
+                android:id="@+id/id_show_button"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

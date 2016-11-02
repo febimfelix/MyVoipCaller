@@ -2,6 +2,7 @@ package com.febi.myvoipcaller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,16 +12,21 @@ import android.widget.Toast;
 
 import com.sinch.android.rtc.SinchError;
 
+import static com.febi.myvoipcaller.AppConstants.APP_PREFERENCE;
+
 public class LoginActivity extends BaseActivity implements SinchService.StartFailedListener {
 
     private Button mLoginButton;
     private EditText mLoginName;
     private ProgressDialog mSpinner;
+    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        mSharedPreferences  = getSharedPreferences(APP_PREFERENCE, 0);
 
         mLoginName      = (EditText) findViewById(R.id.loginName);
         mLoginButton    = (Button) findViewById(R.id.loginButton);
