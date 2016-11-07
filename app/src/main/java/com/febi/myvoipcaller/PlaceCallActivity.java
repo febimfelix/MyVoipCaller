@@ -73,14 +73,11 @@ public class PlaceCallActivity extends BaseActivity {
                     return true;
                 } else {
                     ActivityCompat.requestPermissions(PlaceCallActivity.this,
-                            new String[]{Manifest.permission.READ_CONTACTS,
-                                    Manifest.permission.READ_PHONE_STATE,
-                                    Manifest.permission.RECORD_AUDIO}, 30);
+                            new String[]{Manifest.permission.RECORD_AUDIO}, 30);
                 }
             } else {
                 ActivityCompat.requestPermissions(PlaceCallActivity.this,
-                        new String[]{Manifest.permission.READ_CONTACTS,
-                                Manifest.permission.READ_PHONE_STATE}, 20);
+                        new String[]{Manifest.permission.READ_PHONE_STATE}, 20);
             }
         } else {
             ActivityCompat.requestPermissions(PlaceCallActivity.this,
@@ -203,10 +200,20 @@ public class PlaceCallActivity extends BaseActivity {
                     dismiss();
                     if(mContactsAdapter.getItem(position) != null) {
                         String phoneNo  = mContactsAdapter.getItem(position).getPhoneNumber();
-                        mCallName.setText(phoneNo);
+                        phoneNo = formatPhoneNumber(phoneNo);
+                        mCallName.setText(formatPhoneNumber(phoneNo));
                     }
                 }
             });
+        }
+
+        private String formatPhoneNumber(String phoneNo) {
+            phoneNo = phoneNo.replaceAll("\\D+","");
+            if(phoneNo.length() < 10) {
+                phoneNo = "91" + phoneNo;
+            }
+
+            return phoneNo;
         }
 
         @Override

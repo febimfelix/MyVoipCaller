@@ -1,10 +1,12 @@
 package com.febi.myvoipcaller;
 
+import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ public class CallScreenActivity extends BaseActivity {
 
     static final String TAG = CallScreenActivity.class.getSimpleName();
 
+    private AudioManager mAudioMgr;
     private AudioPlayer mAudioPlayer;
     private Timer mTimer;
     private UpdateCallDurationTask mDurationTask;
@@ -32,6 +35,7 @@ public class CallScreenActivity extends BaseActivity {
     private TextView mCallDuration;
     private TextView mCallState;
     private TextView mCallerName;
+    private ImageView mSpeakerPhoneView;
 
     private class UpdateCallDurationTask extends TimerTask {
 
@@ -51,10 +55,12 @@ public class CallScreenActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.callscreen);
 
+        mAudioMgr               = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         mAudioPlayer            = new AudioPlayer(this);
         mCallDuration           = (TextView) findViewById(R.id.callDuration);
         mCallerName             = (TextView) findViewById(R.id.remoteUser);
         mCallState              = (TextView) findViewById(R.id.callState);
+        mSpeakerPhoneView       = (ImageView) findViewById(R.id.id_speaker_phone);
         Button endCallButton    = (Button) findViewById(R.id.hangupButton);
 
         mCallStart              = System.currentTimeMillis();
@@ -64,6 +70,12 @@ public class CallScreenActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 endCall();
+            }
+        });
+        mSpeakerPhoneView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSpeakerPhoneClicked();
             }
         });
     }
@@ -99,6 +111,19 @@ public class CallScreenActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         // User should exit activity by ending call, not by going back.
+    }
+
+    private void onSpeakerPhoneClicked() {
+        if(mAudioMgr.isSpeakerphoneOn()){
+            mAudioMgr.setSpeakerphoneOn(true);
+            mAudioMgr.setMode(AudioManager.MODE_IN_CALL);
+
+            Toast.makeText(getApplicationContext(), "SpeakerPhone On", Toast.LENGTH_LONG).show();
+        } else {
+            mAudioMgr.setMode(AudioManager.MODE_IN_CALL);
+            mAudioMgr.setSpeakerphoneOn(false);
+            Toast.makeText(getApplicationContext(), "SpeakerPhone Off", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void endCall() {

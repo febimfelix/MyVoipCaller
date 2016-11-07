@@ -11,8 +11,7 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             android:layout_weight="1"
-            android:background="#fffafafa"
-            >
+            android:background="#fffafafa">
 
         <TextView
                 android:id="@+id/remoteUser"
@@ -49,15 +48,22 @@
 
     </LinearLayout>
 
-    <ImageView
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:src="@android:color/holo_blue_bright"
+            android:background="@android:color/holo_blue_bright"
             android:padding="0dip"
             android:layout_weight="3"
             android:contentDescription="Call background">
 
-    </ImageView>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/id_speaker_phone"
+            android:src="@android:drawable/stat_sys_speakerphone"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
             android:id="@+id/bottomPanel"
