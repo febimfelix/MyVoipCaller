@@ -209,7 +209,7 @@ public class PlaceCallActivity extends BaseActivity {
 
         private String formatPhoneNumber(String phoneNo) {
             phoneNo = phoneNo.replaceAll("\\D+","");
-            if(phoneNo.length() < 10) {
+            if(phoneNo.length() == 10) {
                 phoneNo = "91" + phoneNo;
             }
 
